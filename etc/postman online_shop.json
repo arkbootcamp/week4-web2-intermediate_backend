@@ -1,0 +1,146 @@
+{
+	"info": {
+		"_postman_id": "4270797a-5372-4d65-bbb1-80ced864233e",
+		"name": "Online_Shop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "PRODUCT",
+			"item": [
+				{
+					"name": "GET_ALL_PRODUCT",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:3001/product",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3001",
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST_PRODUCT",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "product_name",
+									"value": "Kipas Angin",
+									"type": "text"
+								},
+								{
+									"key": "product_price",
+									"value": "70000",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3001/product",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3001",
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH_PRODUCT",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "product_name",
+									"value": "Kipas",
+									"type": "text"
+								},
+								{
+									"key": "product_price",
+									"value": "50000",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3001/product/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3001",
+							"path": [
+								"product",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE_PRODUCT",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:3001/product",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3001",
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "CATEGORY",
+			"item": [],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
