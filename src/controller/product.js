@@ -1,4 +1,4 @@
-const {getAllProduct, getProductById} = require('../model/product')
+const { getAllProduct, getProductById, postProduct, patchProduct, deleteProduct } = require('../model/product')
 const helper = require('../helper/index.js');
 
 module.exports = {
@@ -24,17 +24,50 @@ module.exports = {
       return helper.response(response, 400, "Bad Request", error)
     }
   },
-  postProduct: (request, response) => {
-    console.log(request.body)
-    response.send('Post Berhasil !')
+  postProduct: async (request, response) => {
+    try {
+      const {product_name, product_harga, product_status} = request.body
+      const setData = {
+        product_name,
+        product_harga,
+        product_created_at: new Date(),
+        product_status
+      }
+      const result = await postProduct(setData)
+      return helper.response(response, 201, "Product Created", result)
+    } catch (error) {
+      return helper.response(response, 400, "Bad Request", error)
+    }
   },
-  patchProduct: (request, response) => {
-    console.log(request.params.id)
-    console.log(request.body)
-    response.send('Patch Berhasil !')
+  patchProduct: async (request, response) => {
+    try {
+      const { id } = request.params
+      const { product_name, product_harga, product_status } = request.body
+      const setData = {
+        product_name,
+        product_harga,
+        product_updated_at: new Date(),
+        product_status
+      }
+      const checkId = await getProductById(id)
+      if (checkId.length > 0) {
+        const result = await patchProduct(setData, id)
+        return helper.response(response, 201, "Product Updated", result)
+      } else {
+        return helper.response(response, 404, `Product By Id : ${id} Not Found`)
+      }
+    } catch (error) {
+      return helper.response(response, 400, "Bad Request", error)
+    }
   },
-  deleteProduct: (request, response) => {
-    console.log(request.params.id)
-    response.send('Delete Berhasil !')
+  // ==================================================================
+  deleteProduct: async (request, response) => {
+    try {
+      const { id } = request.params
+      const result = await deleteProduct(id)
+      return helper.response(response, 201, "Product Deleted", result)
+    } catch (error) {
+      return helper.response(response, 400, "Bad Request", error)
+    }
   }
 }
