@@ -6,6 +6,6 @@ const product = require('./routes/product')
 
 // buat middle disini
 route.use('/product', product)
-// route.use('/category', product)
+// route.use('/category', category)
 
 module.exports = route

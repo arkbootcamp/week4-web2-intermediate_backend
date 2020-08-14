@@ -1,0 +1,21 @@
+ORDER (C,R)
+order_id(PK | AI)  | history_id()  | product_id  | qty | ppn   | total_price 
+1             | 1               | 2           | 1   | 500   | 5500        
+2             | 1               | 3           | 2   | 1000  | 11000       
+3             | 2               | 3 ...
+
+
+HISTORY (C, R, U)
+history_id(PK)  | invoice   | history_subtotal  | history_created_at |
+1               | 123456    | 16500             | 2020-08-10 10:00:00|
+2 ...
+
+
+add history -> add order -> update data history
+1. add history
+2. simpan data id_history
+3. post order
+4. poses hitung subtotal
+5. update data history
+
+index.js -> src/index.js -> routes/product.js -> controller/product.js -> model/product.js -> config/mysql.js
