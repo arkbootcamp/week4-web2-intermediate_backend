@@ -29,26 +29,31 @@
 
 Open .env file on your favorite code editor, and copy paste this code below :
 
-````
+```
 DB_HOST=localhost // Database host
+```
 
 ## End Point
+
 **1. GET**
 
-* `/product`(Get all product)
+- `/product`(Get all product)
 
 **2. POST**
 
-* `/product` (Post product)
-    * ``` { "product_name": "Kipas", "category_id": 2, "product_harga": 50000 , "product_status" : 1 | 0} ```
+- `/product` (Post product)
+  - `{ "product_name": "Kipas", "category_id": 2, "product_harga": 50000 , "product_status" : 1 | 0}`
 
 **3. PATCH**
 
-* `/product/:id` (Update product by id)
+- `/product/:id` (Update product by id)
 
-   * `{"product_name" : "Mouse", "category_id" : 1, "product_harga" : 100000, "product_status" : 1 | 0}`
+  - `{"product_name" : "Mouse", "category_id" : 1, "product_harga" : 100000, "product_status" : 1 | 0}`
 
 **4. DELETE**
 
-* `/product/:id` (Delete product by id)
-````
+- `/product/:id` (Delete product by id)
+
+```
+
+```
