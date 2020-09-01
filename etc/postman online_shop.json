@@ -11,10 +11,27 @@
 				{
 					"name": "GET_ALL_PRODUCT",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VyX2VtYWlsIjoiYmFndXN0cmkxNUBnbWFpbC5jb20iLCJ1c2VyX25hbWUiOiJCYWd1cyBUSCIsInVzZXJfcm9sZSI6MiwidXNlcl9zdGF0dXMiOjAsImlhdCI6MTU5ODk1MzUzMiwiZXhwIjoxNTk4OTU3MTMyfQ.R4uSZMfwQ88Y467yAwUNeTiycHuoW1V5MQhdpr1UV5k",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
 						"url": {
-							"raw": "http://127.0.0.1:3001/product",
+							"raw": "http://127.0.0.1:3001/product?page=2&limit=3",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -25,6 +42,71 @@
 							"port": "3001",
 							"path": [
 								"product"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								},
+								{
+									"key": "limit",
+									"value": "3"
+								},
+								{
+									"key": "sort",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET_PRODUCT_BY_ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VyX2VtYWlsIjoiYmFndXN0cmkxNUBnbWFpbC5jb20iLCJ1c2VyX25hbWUiOiJCYWd1cyBUSCIsInVzZXJfcm9sZSI6MiwidXNlcl9zdGF0dXMiOjAsImlhdCI6MTU5ODk1NzI1NywiZXhwIjoxNTk4OTYwODU3fQ.KXbCJaothFmiDQEOlB28JA_GJbighbjHdTipHuqFJxU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:3001/product/7",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3001",
+							"path": [
+								"product",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET_PRODUCT_BY_NAME",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "?name",
+							"query": [
+								{
+									"key": "name",
+									"value": null
+								}
 							]
 						}
 					},
@@ -42,17 +124,32 @@
 							}
 						],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
+							"mode": "formdata",
+							"formdata": [
 								{
 									"key": "product_name",
-									"value": "Kipas Angin",
+									"value": "Setrika",
 									"type": "text"
 								},
 								{
-									"key": "product_price",
-									"value": "70000",
+									"key": "category_id",
+									"value": "1",
 									"type": "text"
+								},
+								{
+									"key": "product_harga",
+									"value": "500000",
+									"type": "text"
+								},
+								{
+									"key": "product_status",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "product_image",
+									"type": "file",
+									"src": "/Users/apple/Documents/Saved Pictures/Astronaut.jpeg"
 								}
 							]
 						},
@@ -82,17 +179,50 @@
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
+									"key": "category_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
 									"key": "product_name",
 									"value": "Kipas",
 									"type": "text"
 								},
 								{
-									"key": "product_price",
-									"value": "50000",
+									"key": "product_harga",
+									"value": "500",
+									"type": "text"
+								},
+								{
+									"key": "product_status",
+									"value": "1",
 									"type": "text"
 								}
 							]
 						},
+						"url": {
+							"raw": "http://127.0.0.1:3001/product/7",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3001",
+							"path": [
+								"product",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE_PRODUCT",
+					"request": {
+						"method": "DELETE",
+						"header": [],
 						"url": {
 							"raw": "http://127.0.0.1:3001/product/1",
 							"protocol": "http",
@@ -110,14 +240,45 @@
 						}
 					},
 					"response": []
-				},
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "HISTORY",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "CATEGORY",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "ORDER",
+			"item": [
 				{
-					"name": "DELETE_PRODUCT",
+					"name": "GET ORDER",
 					"request": {
-						"method": "DELETE",
+						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://127.0.0.1:3001/product",
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST_ORDER",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"orders\": [\n        {\n            \"product_id\": 1,\n            \"qty\": 2\n            ...\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3001/order",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -127,7 +288,7 @@
 							],
 							"port": "3001",
 							"path": [
-								"product"
+								"order"
 							]
 						}
 					},
@@ -137,9 +298,126 @@
 			"protocolProfileBehavior": {}
 		},
 		{
-			"name": "CATEGORY",
-			"item": [],
+			"name": "AUTH",
+			"item": [
+				{
+					"name": "USER REGISTER",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "user_email",
+									"value": "bagustri16@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "user_password",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "user_name",
+									"value": "Bagus TH",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3001/users/register",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3001",
+							"path": [
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "USER LOGIN",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "user_email",
+									"value": "bagustri15@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "user_password",
+									"value": "123456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3001/users/login",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3001",
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			],
 			"protocolProfileBehavior": {}
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VyX2VtYWlsIjoiYmFndXN0cmkxNUBnbWFpbC5jb20iLCJ1c2VyX25hbWUiOiJCYWd1cyBUSCIsInVzZXJfcm9sZSI6MiwidXNlcl9zdGF0dXMiOjAsImlhdCI6MTU5ODk0MTgwNywiZXhwIjoxNTk4OTQ1NDA3fQ.blgLUkFbmJqpDPadBdd_gDoDvlCh4VrB9Wy6On_9XAY",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "c45fbdf7-3b27-4799-b330-44ac90abdbf4",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "9b87ce7c-4a8f-4793-9b2b-117ef6665637",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	],
 	"protocolProfileBehavior": {}
