@@ -10,7 +10,6 @@ module.exports = {
     const encryptPassword = bcrypt.hashSync(user_password, salt)
     // console.log("user Password = " + user_password)
     // console.log("user Password Bcrypt = " + encryptPassword)
-    // kondisi jika emailnya sama itu tidak bisa
     const setData = {
       user_email,
       user_password: encryptPassword,
@@ -20,6 +19,10 @@ module.exports = {
       user_created_at: new Date(),
     }
     try {
+      // kondisi jika emailnya sama itu tidak bisa
+      // model ngecek apakah emailnya ada di database atau tidak
+      // jika ada nanti akan dibuat response
+      // jika tidak ada
       const result = await postUser(setData)
       return helper.response(response, 200, "Success Register User", result)
     } catch (error) {
