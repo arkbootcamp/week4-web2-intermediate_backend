@@ -57,9 +57,13 @@ module.exports = {
       const result = await getProduct(limit, offset)
       // console.log(request.query)
       // console.log(JSON.stringify(request.query))
+      const newData = {
+        result,
+        pageInfo,
+      }
       client.set(
         `getproduct:${JSON.stringify(request.query)}`,
-        JSON.stringify(result)
+        JSON.stringify(newData)
       )
       return helper.response(
         response,
@@ -78,8 +82,8 @@ module.exports = {
       // const id = request.params.id
       const { id } = request.params
       const result = await getProductById(id)
-      client.setex(`getproductbyid:${id}`, 3600, JSON.stringify(result))
       if (result.length > 0) {
+        client.setex(`getproductbyid:${id}`, 3600, JSON.stringify(result))
         return helper.response(
           response,
           200,
