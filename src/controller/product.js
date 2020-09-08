@@ -100,9 +100,15 @@ module.exports = {
   postProduct: async (request, response) => {
     try {
       console.log(request.file)
-      const { product_name, product_harga, product_status } = request.body
+      const {
+        product_name,
+        category_id,
+        product_harga,
+        product_status,
+      } = request.body
       const setData = {
         product_name,
+        category_id,
         product_harga,
         product_image: request.file === undefined ? "" : request.file.filename,
         product_created_at: new Date(),

@@ -53,4 +53,5 @@ DB_HOST=localhost // Database host
 **4. DELETE**
 
 - `/product/:id` (Delete product by id)
-# week6-web3-intermediate_backend
+
+# Link Postman : https://interstellar-robot-6874-1.postman.co/collections/9852901-4270797a-5372-4d65-bbb1-80ced864233e?version=latest&workspace=75e558bd-82d9-4039-8609-a021f61852a1#30c78c02-31bf-44d1-bda2-8cb61468733a

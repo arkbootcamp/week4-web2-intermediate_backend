@@ -18,10 +18,10 @@ const uploadImage = require("../middleware/multer")
 router.get("/", authorization, getProductRedis, getAllProduct)
 router.get("/:id", authorization, getProductByIdRedis, getProductById)
 // [POST]
-router.post("/", authorization, uploadImage, postProduct)
+router.post("/", authorization, clearDataProductRedis, uploadImage, postProduct)
 // [PATCH/PUT]
-router.patch("/:id", clearDataProductRedis, patchProduct)
+router.patch("/:id", authorization, clearDataProductRedis, patchProduct)
 // [DELETE]
-router.delete("/:id", clearDataProductRedis, deleteProduct)
+router.delete("/:id", authorization, clearDataProductRedis, deleteProduct)
 
 module.exports = router
