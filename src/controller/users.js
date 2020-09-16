@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt")
 const helper = require("../helper")
 const jwt = require("jsonwebtoken")
+const nodemailer = require("nodemailer")
 const { postUser, checkUser } = require("../model/users")
 
 module.exports = {
@@ -62,6 +63,44 @@ module.exports = {
         } else {
           return helper.response(response, 400, "Wrong Password !")
         }
+      } else {
+        return helper.response(response, 400, "Email / Account not registed !")
+      }
+    } catch (error) {
+      return helper.response(response, 400, "Bad Request")
+    }
+  },
+  forgotPassword: async (request, response) => {
+    try {
+      const { user_email } = request.body
+      const keys = Math.round(Math.random() * 10000)
+      const checkDataUser = await checkUser(user_email)
+      if (checkDataUser.length >= 1) {
+        console.log(keys)
+        //proses update keys
+        //proses email ============================================
+        let transporter = nodemailer.createTransport({
+          host: "smtp.gmail.com",
+          port: 465,
+          secure: true, // true for 465, false for other ports
+          auth: {
+            user: "your_email", // generated ethereal user
+            pass: "your_password_email", // generated ethereal password
+          },
+        })
+        await transporter.sendMail({
+          from: '"Coffee Shop"', // sender address
+          to: user_email, // list of receivers
+          subject: "Coffe Shop - Forgot Password", // Subject line
+          html: `Your Code is <b>${keys}</b>`, // html body
+        }),
+          function (err) {
+            if (err) {
+              return helper.response(response, 400, "Email not send !")
+            }
+          }
+        //proses email ============================================
+        return helper.response(response, 200, "Email has been send !")
       } else {
         return helper.response(response, 400, "Email / Account not registed !")
       }
