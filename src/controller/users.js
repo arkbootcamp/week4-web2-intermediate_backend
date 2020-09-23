@@ -4,6 +4,8 @@ const jwt = require("jsonwebtoken")
 const nodemailer = require("nodemailer")
 const { postUser, checkUser } = require("../model/users")
 
+let refreshTokens = {}
+
 module.exports = {
   registerUser: async (request, response) => {
     const { user_email, user_password, user_name } = request.body
@@ -57,8 +59,15 @@ module.exports = {
             user_role,
             user_status,
           }
-          const token = jwt.sign(payload, "RAHASIA", { expiresIn: "1h" })
-          payload = { ...payload, token }
+          const token = jwt.sign(payload, "RAHASIA", { expiresIn: "10s" })
+          //========================================================================
+          const refreshToken = jwt.sign(payload, "RAHASIA", {
+            expiresIn: "48h",
+          })
+          refreshTokens[refreshToken] = user_id
+          console.log(refreshTokens)
+          payload = { ...payload, token, refreshToken }
+          //========================================================================
           return helper.response(response, 200, "Success Login !", payload)
         } else {
           return helper.response(response, 400, "Wrong Password !")
@@ -93,6 +102,7 @@ module.exports = {
           to: user_email, // list of receivers
           subject: "Coffe Shop - Forgot Password", // Subject line
           html: `Your Code is <b>${keys}</b>`, // html body
+          // html: `<a href="http://localhost:8080/changePassword?keys=${keys}">Click Here To Change Password</a>`,
         }),
           function (err) {
             if (err) {
@@ -106,6 +116,47 @@ module.exports = {
       }
     } catch (error) {
       return helper.response(response, 400, "Bad Request")
+    }
+  },
+  refreshToken: async (request, response) => {
+    const { userId, refreshToken } = request.body
+    if (
+      refreshToken in refreshTokens &&
+      refreshTokens[refreshToken] == userId
+    ) {
+      jwt.verify(refreshToken, "RAHASIA", (error, result) => {
+        if (
+          (error && error.name === "JsonWebTokenError") ||
+          (error && error.name === "TokenExpiredError")
+        ) {
+          return helper.response(response, 403, error.message)
+        } else {
+          delete result.iat
+          delete result.exp
+          delete refreshTokens[refreshToken] // delete refresh token yang lama
+          const token = jwt.sign(result, "RAHASIA", { expiresIn: "1h" })
+          const refreshTokenAgain = jwt.sign(result, "RAHASIA", {
+            //bagian sini dibedakan namanya
+            expiresIn: "48h",
+          })
+
+          refreshTokens[refreshTokenAgain] = userId // input refresh token yang baru
+          console.log(refreshTokens)
+          const payload = { ...result, token, refreshToken: refreshTokenAgain }
+          return helper.response(
+            response,
+            200,
+            "Success Refresh Token !",
+            payload
+          )
+        }
+      })
+    } else {
+      return helper.response(
+        response,
+        403,
+        "Token Not Match Please Login Again !"
+      )
     }
   },
 }
