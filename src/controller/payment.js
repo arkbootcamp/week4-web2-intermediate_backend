@@ -26,7 +26,7 @@ module.exports = {
       clientKey: process.env.midtransClientKey,
     })
 
-    snap.transaction.notification(notificationJson).then((statusResponse) => {
+    snap.transaction.notification(request.body).then((statusResponse) => {
       let orderId = statusResponse.order_id
       let transactionStatus = statusResponse.transaction_status
       let fraudStatus = statusResponse.fraud_status
