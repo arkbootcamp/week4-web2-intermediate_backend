@@ -22,8 +22,8 @@ module.exports = {
   postMidtransNotif: async (request, response) => {
     let snap = new midtransClient.Snap({
       isProduction: false,
-      serverKey: "SB-Mid-server-KItkJVnyFsZRa-JD5HL_x_DC",
-      clientKey: "SB-Mid-client-lyiBVkXY-ImOkiuQ",
+      serverKey: process.env.midtransServerKey,
+      clientKey: process.env.midtransClientKey,
     })
 
     snap.transaction.notification(notificationJson).then((statusResponse) => {
@@ -37,11 +37,14 @@ module.exports = {
 
       if (transactionStatus == "capture") {
         if (fraudStatus == "challenge") {
+          console.log("challenge")
           // TODO set transaction status on your databaase to 'challenge'
         } else if (fraudStatus == "accept") {
+          console.log("accept")
           // TODO set transaction status on your databaase to 'success'
         }
       } else if (transactionStatus == "settlement") {
+        console.log("settelement")
         // TODO set transaction status on your databaase to 'success'
         // [model 1] proses update data status to table topup : status berhasil
         // const updateStatusResult = await modelUpdateStatusResult(orderId, transactionStatus)
@@ -53,14 +56,17 @@ module.exports = {
         // saldoBaru = nominal sebelum topup + nominal topup
         // [model 3] update data saldo supaya saldo si user bertambah (user_id, saldoBaru)
       } else if (transactionStatus == "deny") {
+        console.log("deny")
         // TODO you can ignore 'deny', because most of the time it allows payment retries
         // and later can become success
       } else if (
         transactionStatus == "cancel" ||
         transactionStatus == "expire"
       ) {
+        console.log("cancel / expire")
         // TODO set transaction status on your databaase to 'failure'
       } else if (transactionStatus == "pending") {
+        console.log("pending")
         // TODO set transaction status on your databaase to 'pending' / waiting payment
       }
     })
