@@ -26,49 +26,57 @@ module.exports = {
       clientKey: process.env.midtransClientKey,
     })
 
-    snap.transaction.notification(request.body).then((statusResponse) => {
-      let orderId = statusResponse.order_id
-      let transactionStatus = statusResponse.transaction_status
-      let fraudStatus = statusResponse.fraud_status
+    snap.transaction
+      .notification(request.body)
+      .then((statusResponse) => {
+        let orderId = statusResponse.order_id
+        let transactionStatus = statusResponse.transaction_status
+        let fraudStatus = statusResponse.fraud_status
 
-      console.log(
-        `Transaction notification received. Order ID: ${orderId}. Transaction status: ${transactionStatus}. Fraud status: ${fraudStatus}`
-      )
+        console.log(
+          `Transaction notification received. Order ID: ${orderId}. Transaction status: ${transactionStatus}. Fraud status: ${fraudStatus}`
+        )
 
-      if (transactionStatus == "capture") {
-        if (fraudStatus == "challenge") {
-          console.log("challenge")
-          // TODO set transaction status on your databaase to 'challenge'
-        } else if (fraudStatus == "accept") {
-          console.log("accept")
+        if (transactionStatus == "capture") {
+          if (fraudStatus == "challenge") {
+            console.log("challenge")
+            // TODO set transaction status on your databaase to 'challenge'
+          } else if (fraudStatus == "accept") {
+            console.log("accept")
+            // TODO set transaction status on your databaase to 'success'
+          }
+        } else if (transactionStatus == "settlement") {
+          console.log("settelement")
           // TODO set transaction status on your databaase to 'success'
+          // [model 1] proses update data status to table topup : status berhasil
+          // const updateStatusResult = await modelUpdateStatusResult(orderId, transactionStatus)
+          // response user_id, nominal topup
+          // ==================================
+          // [model 2] check nominal sebelumnya dan akan set parameter (user_id)
+          // response nominal sebelum topup
+          // ==================================
+          // saldoBaru = nominal sebelum topup + nominal topup
+          // [model 3] update data saldo supaya saldo si user bertambah (user_id, saldoBaru)
+        } else if (transactionStatus == "deny") {
+          console.log("deny")
+          // TODO you can ignore 'deny', because most of the time it allows payment retries
+          // and later can become success
+        } else if (
+          transactionStatus == "cancel" ||
+          transactionStatus == "expire"
+        ) {
+          console.log("cancel / expire")
+          // TODO set transaction status on your databaase to 'failure'
+        } else if (transactionStatus == "pending") {
+          console.log("pending")
+          // TODO set transaction status on your databaase to 'pending' / waiting payment
         }
-      } else if (transactionStatus == "settlement") {
-        console.log("settelement")
-        // TODO set transaction status on your databaase to 'success'
-        // [model 1] proses update data status to table topup : status berhasil
-        // const updateStatusResult = await modelUpdateStatusResult(orderId, transactionStatus)
-        // response user_id, nominal topup
-        // ==================================
-        // [model 2] check nominal sebelumnya dan akan set parameter (user_id)
-        // response nominal sebelum topup
-        // ==================================
-        // saldoBaru = nominal sebelum topup + nominal topup
-        // [model 3] update data saldo supaya saldo si user bertambah (user_id, saldoBaru)
-      } else if (transactionStatus == "deny") {
-        console.log("deny")
-        // TODO you can ignore 'deny', because most of the time it allows payment retries
-        // and later can become success
-      } else if (
-        transactionStatus == "cancel" ||
-        transactionStatus == "expire"
-      ) {
-        console.log("cancel / expire")
-        // TODO set transaction status on your databaase to 'failure'
-      } else if (transactionStatus == "pending") {
-        console.log("pending")
-        // TODO set transaction status on your databaase to 'pending' / waiting payment
-      }
-    })
+      })
+      .then(() => {
+        return helper.response(response, 200, "OK")
+      })
+      .catch((error) => {
+        return helper.response(response, 200, error)
+      })
   },
 }
