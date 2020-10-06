@@ -106,6 +106,8 @@ module.exports = {
         }),
           function (err) {
             if (err) {
+              console.log("error boss")
+              console.log(err)
               return helper.response(response, 400, "Email not send !")
             }
           }
@@ -115,6 +117,8 @@ module.exports = {
         return helper.response(response, 400, "Email / Account not registed !")
       }
     } catch (error) {
+      console.log("error bad request")
+      console.log(error)
       return helper.response(response, 400, "Bad Request")
     }
   },
