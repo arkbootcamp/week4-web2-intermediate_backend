@@ -90,8 +90,9 @@ module.exports = {
         //proses email ============================================
         let transporter = nodemailer.createTransport({
           host: "smtp.gmail.com",
-          port: 465,
-          secure: true, // true for 465, false for other ports
+          port: 587,
+          ignoreTLS: false,
+          secure: false, // true for 465, false for other ports
           auth: {
             user: process.env.email, // generated ethereal user
             pass: process.env.passEmail, // generated ethereal password
