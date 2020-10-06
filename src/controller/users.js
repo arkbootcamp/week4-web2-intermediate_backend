@@ -93,8 +93,8 @@ module.exports = {
           port: 465,
           secure: true, // true for 465, false for other ports
           auth: {
-            user: "your_email", // generated ethereal user
-            pass: "your_password_email", // generated ethereal password
+            user: process.env.email, // generated ethereal user
+            pass: process.env.passEmail, // generated ethereal password
           },
         })
         await transporter.sendMail({
