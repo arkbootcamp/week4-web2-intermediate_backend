@@ -14,7 +14,7 @@ module.exports = {
         ) {
           return helper.response(response, 403, error.message)
         } else {
-          // console.log(result)
+          console.log(result)
           request.token = result
           next()
         }
